@@ -26,29 +26,13 @@ predictMarkov <- function(pageview_names) {
 #' @export
 #' @import markovchain
 predictNextPage <- function(current_url){
-
-  current_url <- current_url[!grepl("undefined", current_url)]
-
-  message("Predicting next page for ", current_url)
-
-  markovList <-  mcfL$estimate
-  out <- try(predict(markovList, newdata = current_url), silent = TRUE)
-
+  out <- try(predict(model$estimate, newdata = current_url), silent = TRUE)
   if(inherits(out, "try-error")){
-
-    ## try just with last page
-    ll <- length(current_url)
-    retry_urls <- current_url[ll]
-    out <- try(predict(markovList, newdata = retry_urls), silent = TRUE)
-
-    if(inherits(out, "try-error")){
-      message("No prediction available")
-      return(NULL)
-    }
+    out <- "None"
   }
-
   out
 }
+
 
 
 #' Replace a string with substitutions
