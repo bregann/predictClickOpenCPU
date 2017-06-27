@@ -30,7 +30,12 @@ predictNextPage <- function(current_url){
   if(inherits(out, "try-error")){
     out <- "None"
   }
-  out
+  Out_1 <- try(transitionProbability(Markov_fit, current_url , out), silent = TRUE)
+  if(inherits(Out_1, "try-error")){
+    Out_1 <- "None"
+  }
+  list(Next_page = out,
+       probability = Out_1)
 }
 
 
